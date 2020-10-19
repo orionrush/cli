@@ -8,7 +8,7 @@ const chalk = require('chalk')
 const mkdirp = require('mkdirp')
 const dedent = require('dedent')
 const isBlank = require('is-blank')
-const isPresnet = require('is-present')
+// const isPresnet = require('is-present')
 const fileExists = require('file-exists')
 const cssstats = require('cssstats')
 const trailingLines = require('single-trailing-newline')
@@ -48,7 +48,7 @@ const outputFile = cli.input[1]
 
 if (cli.flags.new) {
   console.log('Generating a new Tachyons project')
-  const projDir = cli.flags.new == true ? 'tachyons-project' : cli.flags.new
+  const projDir = cli.flags.new === true ? 'tachyons-project' : cli.flags.new
 
   mkdirp.sync(projDir)
   mkdirp.sync(projDir + '/src')
@@ -112,7 +112,7 @@ tachyonsBuildCss(input, {
       stats,
       authors,
       module: pkg,
-      srcMd: dedent(srcMd && srcMd[0] || defaultMd).replace(/^\/\*!!!/, '').replace(/\*\/$/, ''),
+      srcMd: dedent((srcMd && srcMd[0]) || defaultMd).replace(/^\/\*!!!/, '').replace(/\*\/$/, ''),
       srcCss: trailingLines(result.css)
     })
 
