@@ -13,7 +13,7 @@
   },
   "main": "index.js",
   "bin": {
-    "tachyons-test": "cli.js"
+    "tachyons": "cli.js"
   },
   "engines": {
     "node": ">=6"
