@@ -8,7 +8,7 @@
   "repository": "tachyons-css/tachyons",
   "license": "MIT",
   "devDependencies": {
-    "tachyons": "^4.7.0",
-    "tachyons-cli": "^1.0.10"
+    "tachyons": "^4.12.0",
+    "tachyons-cli": "github:orionrush/cli#1.3.3-draft-build"
   }
 }
