@@ -2,6 +2,7 @@
 'use strict'
 
 const fs = require('fs')
+const path = require('path')
 const _ = require('lodash')
 const meow = require('meow')
 const chalk = require('chalk')
@@ -50,19 +51,19 @@ if (cli.flags.new) {
   console.log('Generating a new Tachyons project')
   const projDir = cli.flags.new === true ? 'tachyons-project' : cli.flags.new
 
-  mkdirp.sync(projDir)
-  mkdirp.sync(projDir + '/src')
-  mkdirp.sync(projDir + '/css')
+  mkdirp.sync(path.resolve(projDir))
+  mkdirp.sync(path.resolve(projDir, '/src'))
+  mkdirp.sync(path.resolve(projDir, '/css'))
 
-  const index = fs.readFileSync(__dirname + '/templates/new/index.html', 'utf8')
-  const pkg = fs.readFileSync(__dirname + '/templates/new/package.json', 'utf8')
-  const readme = fs.readFileSync(__dirname + '/templates/new/readme.md', 'utf8')
-  const style = fs.readFileSync(__dirname + '/templates/new/src/styles.css', 'utf8')
+  const index = fs.readFileSync( path.resolve(__dirname, '/templates/new/index.html'), 'utf8')
+  const pkg = fs.readFileSync( path.resolve(__dirname, '/templates/new/package.json'), 'utf8')
+  const readme = fs.readFileSync( path.resolve(__dirname, '/templates/new/readme.md'), 'utf8')
+  const style = fs.readFileSync( path.resolve(__dirname, '/templates/new/src/styles.css'), 'utf8')
 
-  fs.writeFileSync(projDir + '/index.html', index)
-  fs.writeFileSync(projDir + '/package.json', pkg)
-  fs.writeFileSync(projDir + '/readme.md', readme)
-  fs.writeFileSync(projDir + '/src/styles.css', style)
+  fs.writeFileSync(path.resolve(projDir, '/index.html'), index)
+  fs.writeFileSync(path.resolve(projDir, '/package.json'), pkg)
+  fs.writeFileSync(path.resolve(projDir, '/readme.md'), readme)
+  fs.writeFileSync(path.resolve(projDir, '/src/styles.css'), style)
 
   console.log('New project located in ' + projDir)
   process.exit(0)
@@ -90,7 +91,7 @@ tachyonsBuildCss(input, {
   if (cli.flags.generateDocs) {
     const stats = cssstats(result.css)
     const pkg = require(cli.flags.package)
-    const template = fs.readFileSync(__dirname + '/templates/readme.md', 'utf8')
+    const template = fs.readFileSync(path.resolve(__dirname, '/templates/readme.md'), 'utf8')
     const tpl = _.template(template)
 
     let authors = `* [mrmrs](http://mrmrs.io)
