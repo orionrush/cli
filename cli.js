@@ -2,13 +2,13 @@
 'use strict'
 
 const fs = require('fs')
+const path = require('path')
 const _ = require('lodash')
 const meow = require('meow')
 const chalk = require('chalk')
 const mkdirp = require('mkdirp')
 const dedent = require('dedent')
 const isBlank = require('is-blank')
-const isPresnet = require('is-present')
 const fileExists = require('file-exists')
 const cssstats = require('cssstats')
 const trailingLines = require('single-trailing-newline')
@@ -50,21 +50,21 @@ const outputFile = cli.input[1]
 
 if (cli.flags.new) {
   console.log('Generating a new Tachyons project')
-  const projDir = cli.flags.new == true ? 'tachyons-project' : cli.flags.new
+  const projDir = cli.flags.new === true ? 'tachyons-project' : cli.flags.new
 
   mkdirp.sync(projDir)
-  mkdirp.sync(projDir + '/src')
-  mkdirp.sync(projDir + '/css')
+  mkdirp.sync(path.join(projDir, '/src'))
+  mkdirp.sync(path.join(projDir, '/css'))
 
-  const index = fs.readFileSync(__dirname + '/templates/new/index.html', 'utf8')
-  const pkg = fs.readFileSync(__dirname + '/templates/new/package.json', 'utf8')
-  const readme = fs.readFileSync(__dirname + '/templates/new/readme.md', 'utf8')
-  const style = fs.readFileSync(__dirname + '/templates/new/src/styles.css', 'utf8')
+  const index = fs.readFileSync(path.join(__dirname, '/templates/new/index.html'), 'utf8')
+  const pkg = fs.readFileSync(path.join(__dirname, '/templates/new/package.json'), 'utf8')
+  const readme = fs.readFileSync(path.join(__dirname, '/templates/new/readme.md'), 'utf8')
+  const style = fs.readFileSync(path.join(__dirname, '/templates/new/src/styles.css'), 'utf8')
 
-  fs.writeFileSync(projDir + '/index.html', index)
-  fs.writeFileSync(projDir + '/package.json', pkg)
-  fs.writeFileSync(projDir + '/readme.md', readme)
-  fs.writeFileSync(projDir + '/src/styles.css', style)
+  fs.writeFileSync(path.join(projDir, '/index.html'), index)
+  fs.writeFileSync(path.join(projDir, '/package.json'), pkg)
+  fs.writeFileSync(path.join(projDir, '/readme.md'), readme)
+  fs.writeFileSync(path.join(projDir, '/src/styles.css'), style)
 
   console.log('New project located in ' + projDir)
   process.exit(0)
@@ -92,7 +92,7 @@ tachyonsBuildCss(input, {
   if (cli.flags.generateDocs) {
     const stats = cssstats(result.css)
     const pkg = require(cli.flags.package)
-    const template = fs.readFileSync(__dirname + '/templates/readme.md', 'utf8')
+    const template = fs.readFileSync(path.join(__dirname, '/templates/readme.md'), 'utf8')
     const tpl = _.template(template)
 
     let authors = `* [mrmrs](http://mrmrs.io)
@@ -115,7 +115,7 @@ tachyonsBuildCss(input, {
       stats,
       authors,
       module: pkg,
-      srcMd: dedent(srcMd && srcMd[0] || defaultMd).replace(/^\/\*!!!/, '').replace(/\*\/$/, ''),
+      srcMd: dedent((srcMd && srcMd[0]) || defaultMd).replace(/^\/\*!!!/, '').replace(/\*\/$/, ''),
       srcCss: trailingLines(result.css)
     })
 
