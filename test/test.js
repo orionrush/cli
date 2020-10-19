@@ -1,4 +1,3 @@
-const fs = require('fs')
 const test = require('ava')
 const pify = require('pify')
 const childProcess = require('child_process')
